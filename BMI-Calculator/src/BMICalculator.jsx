@@ -21,7 +21,7 @@ function BMICalculator() {
         
         if (!Number.isFinite(w) || !Number.isFinite(h) || w <= 0 || h <= 0) {
             setBMI(null);
-            setMessage("Please enter valid weight and height.");
+            window.alert("Please enter valid weight and height.");
             return;
         }
 
@@ -30,10 +30,19 @@ function BMICalculator() {
         const rounded = Number(value.toFixed(1));
         setBMI(rounded);
 
-        if (value < 18.5) setMessage('Underweight');
-        else if (value >= 18.5 && value <= 24.9) setMessage('Normal weight');
-        else if (value >= 25 && value <= 29.9) setMessage('Overweight');
-        else setMessage('Obese');
+        
+        if (value <= 18.5) {
+            setMessage("You are UnderWeight");
+        } else if (value <= 24.9) {
+            setMessage("You weight is Normal");
+        } else if (value <= 29.9) {
+            setMessage("You are OverWeight");
+        } else if (value >= 30) {
+            setMessage("You are Obese");
+        } else {
+            window.alert("Please enter valid weight and height");
+        }
+        
    }
 
     return (
@@ -48,8 +57,6 @@ function BMICalculator() {
                 type="number" 
                 id="BMIinput" 
                 placeholder="Width: (lbs)"
-                min="0"
-                step="any"
                 value={weight}
                 onChange={(e) => setWeight(e.target.value)}></input></center><br></br>
         <center>
@@ -57,8 +64,6 @@ function BMICalculator() {
                 type="text" 
                 id="BMIinput" 
                 placeholder="Height: (inches)"
-                min="0"
-                step="any"
                 value={height}
                 onChange={(e) => setHeight(e.target.value)}></input></center><br></br>
         <center>

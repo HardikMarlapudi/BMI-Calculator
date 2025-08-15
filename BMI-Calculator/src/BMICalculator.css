@@ -47,7 +47,8 @@
 }
 
 #BMIButton:hover {
-    background-color: green;
+    background-color: #008000;
+    border-color: #008000;
 }
 
 #reset {
@@ -63,4 +64,5 @@
 
 #reset:hover {
     background-color: #8b0000;
+    border-color: #8b0000;
 }
