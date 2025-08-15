@@ -5,6 +5,6 @@ import './BMICalculator.css';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BMICalculator />,
-  </StrictMode>,
+    <BMICalculator />
+  </StrictMode>
 )

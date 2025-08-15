@@ -4,8 +4,8 @@ import './BMICalculator.css';
 function BMICalculator() {
 
     const [BMI, setBMI] = useState(null);
-    const [weight, setWeight] = useState('');
-    const [height, setHeight] = useState('');
+    const [weight, setWeight] = useState(''); // lbs
+    const [height, setHeight] = useState(''); // inches
     const [message, setMessage] = useState('');
 
    const reset = () => {
@@ -13,50 +13,27 @@ function BMICalculator() {
         setWeight('');
         setHeight('');
         setMessage('');
-
-    if (document.getElementById("BMIinput") != null) {
-        document.getElementById("BMIinput").value = "";
-        document.getElementById("BMIOutput").textContent = "";
-    }
 }
 
-   function calculate() {
+   const calculate = () => {
+        const w = parseFloat(weight);
+        const h = parseFloat(height);
         
-        if (!weight || !height || isNaN(weight) || isNaN(height)) {
+        if (!Number.isFinite(w) || !Number.isFinite(h) || w <= 0 || h <= 0) {
+            setBMI(null);
             setMessage("Please enter valid weight and height.");
             return;
         }
 
         // BMI formula for imperial units
-        const calculatedBMI = () => weight / (height ** 2) / 703;
-        setBMI(calculatedBMI.toFixed(1));
+        const value = weight / (height ** 2) * 703;
+        const rounded = Number(value.toFixed(1));
+        setBMI(rounded);
 
-        if(BMI < 18.5) {
-
-            document.getElementById("BMIOutput").textContent = `${`Your BMI is ${BMI} (Underweight)`}`;
-            setMessage('UnderWeight');
-
-        } else if (BMI >= 18.5 && BMI >= 24.5) {
-
-            document.getElementById("BMIOutput").textContent = `${`Your BMI is ${BMI} (Normal weight)`}`;
-            setMessage('Normal Weight');
-
-        } else if (BMI >= 25 && BMI >= 29.9) {
-
-            document.getElementById("BMIOutput").textContent = `${`Your BMI is ${BMI} (Overweight)`}`;
-            setMessage('OverWeight');
-
-        } else if (BMI >= 30) {
-
-            document.getElementById("BMIOutput").textContent = `${`Your BMI is ${BMI} (Obese)`}`;
-            setMessage('Obese');
-
-        } else {
-
-            document.getElementById("BMIOutput").textContent = `${`Error`}`;
-            setMessage('Error');
-
-        }
+        if (value < 18.5) setMessage('Underweight');
+        else if (value >= 18.5 && value <= 24.9) setMessage('Normal weight');
+        else if (value >= 25 && value <= 29.9) setMessage('Overweight');
+        else setMessage('Obese');
    }
 
     return (
@@ -70,14 +47,18 @@ function BMICalculator() {
             <input 
                 type="number" 
                 id="BMIinput" 
-                placeholder="Width: "
+                placeholder="Width: (lbs)"
+                min="0"
+                step="any"
                 value={weight}
                 onChange={(e) => setWeight(e.target.value)}></input></center><br></br>
         <center>
             <input 
                 type="text" 
                 id="BMIinput" 
-                placeholder="Height: "
+                placeholder="Height: (inches)"
+                min="0"
+                step="any"
                 value={height}
                 onChange={(e) => setHeight(e.target.value)}></input></center><br></br>
         <center>
