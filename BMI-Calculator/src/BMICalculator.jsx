@@ -3,14 +3,16 @@ import './BMICalculator.css';
 
 function BMICalculator() {
 
-    let [BMI, setBMI] = useState(0);
-    let [weight, setWeight] = useState(0);
-    let [height, setHeight] = useState(0);
+    const [BMI, setBMI] = useState(null);
+    const [weight, setWeight] = useState('');
+    const [height, setHeight] = useState('');
+    const [message, setMessage] = useState('');
 
-   function reset() {
-        setBMI(0);
-        setWeight(0);
-        setHeight(0);
+   const reset = () => {
+        setBMI(null);
+        setWeight('');
+        setHeight('');
+        setMessage('');
 
     if (document.getElementById("BMIinput") != null) {
         document.getElementById("BMIinput").value = "";
@@ -19,32 +21,40 @@ function BMICalculator() {
 }
 
    function calculate() {
-        BMI = weight / (height ** 2) / 703;
+        
+        if (!weight || !height || isNaN(weight) || isNaN(height)) {
+            setMessage("Please enter valid weight and height.");
+            return;
+        }
+
+        // BMI formula for imperial units
+        const calculatedBMI = () => weight / (height ** 2) / 703;
+        setBMI(calculatedBMI.toFixed(1));
 
         if(BMI < 18.5) {
 
             document.getElementById("BMIOutput").textContent = `${`Your BMI is ${BMI} (Underweight)`}`;
-            console.log(BMI);
+            setMessage('UnderWeight');
 
         } else if (BMI >= 18.5 && BMI >= 24.5) {
 
             document.getElementById("BMIOutput").textContent = `${`Your BMI is ${BMI} (Normal weight)`}`;
-            console.log(BMI);
+            setMessage('Normal Weight');
 
         } else if (BMI >= 25 && BMI >= 29.9) {
 
             document.getElementById("BMIOutput").textContent = `${`Your BMI is ${BMI} (Overweight)`}`;
-            console.log(BMI);
+            setMessage('OverWeight');
 
         } else if (BMI >= 30) {
 
             document.getElementById("BMIOutput").textContent = `${`Your BMI is ${BMI} (Obese)`}`;
-            console.log(BMI);
+            setMessage('Obese');
 
         } else {
 
             document.getElementById("BMIOutput").textContent = `${`Error`}`;
-            console.log('Error');
+            setMessage('Error');
 
         }
    }
@@ -56,8 +66,22 @@ function BMICalculator() {
 
         <h1 id="title">BMI Calculator</h1>
 
-        <center><input type="text" id="BMIinput"></input></center><br></br>
-        <center><p type="text" id="BMIOutput"></p></center><br></br>
+        <center>
+            <input 
+                type="number" 
+                id="BMIinput" 
+                placeholder="Width: "
+                value={weight}
+                onChange={(e) => setWeight(e.target.value)}></input></center><br></br>
+        <center>
+            <input 
+                type="text" 
+                id="BMIinput" 
+                placeholder="Height: "
+                value={height}
+                onChange={(e) => setHeight(e.target.value)}></input></center><br></br>
+        <center>
+            <p type="text" id="BMIOutput">Your BMI is {BMI} ({message})</p>{!BMI && message && <p>{message}</p>}</center><br></br>
 
         <div className="buttons">
         <button id="BMIButton" onClick={calculate}>Calculate</button>
