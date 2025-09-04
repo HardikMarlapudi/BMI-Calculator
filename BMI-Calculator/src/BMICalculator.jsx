@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import './BMICalculator.css';
+import "./BMICalculator.css";
 
 function BMICalculator() {
 
@@ -15,7 +15,7 @@ function BMICalculator() {
         setMessage('');
 }
 
-   const calculate = () => {
+    const calculate = () => {
         const w = parseFloat(weight);
         const h = parseFloat(height);
         
