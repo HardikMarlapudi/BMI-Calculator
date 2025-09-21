@@ -11,8 +11,8 @@
 .border-scale {
     border: 3px solid;
     border-radius: 0.3rem;
-    padding: 10px 20px;
-    height: 55rem;
+    padding: 5px 5px;
+    border-width: 0.5rem;
 }
 
 #BMIinput {

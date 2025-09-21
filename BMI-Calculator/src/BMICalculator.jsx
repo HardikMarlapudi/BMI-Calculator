@@ -6,14 +6,14 @@ function BMICalculator() {
     const [BMI, setBMI] = useState(null);
     const [weight, setWeight] = useState(''); // lbs
     const [height, setHeight] = useState(''); // inches
-    const [message, setMessage] = useState('');
+    const [message, setMessage] = useState(''); // BMI message
 
    const reset = () => {
         setBMI(null);
         setWeight('');
         setHeight('');
         setMessage('');
-}
+    }
 
     const calculate = () => {
         const w = parseFloat(weight);
@@ -21,7 +21,7 @@ function BMICalculator() {
         
         if (!Number.isFinite(w) || !Number.isFinite(h) || w <= 0 || h <= 0) {
             setBMI(null);
-            window.alert("Please enter valid weight and height.");
+            window.alert("Please enter your weight and height.");
             return;
         }
 
@@ -40,7 +40,7 @@ function BMICalculator() {
         } else if (value >= 30) {
             setMessage("You are Obese");
         } else {
-            window.alert("Please enter valid weight and height");
+            window.alert("Please enter your weight and height");
         }
         
    }
@@ -67,7 +67,16 @@ function BMICalculator() {
                 value={height}
                 onChange={(e) => setHeight(e.target.value)}></input></center><br></br>
         <center>
-            <p type="text" id="BMIOutput">Your BMI is {BMI} ({message})</p>{!BMI && message && <p>{message}</p>}</center><br></br>
+            <p 
+            type="text" 
+            id="BMIOutput">
+            Your BMI is {BMI} ({message})
+            </p>
+            {!BMI && message && 
+            <p>{message}
+            </p>
+            }
+            </center><br></br>
 
         <div className="buttons">
         <button id="BMIButton" onClick={calculate}>Calculate</button>
